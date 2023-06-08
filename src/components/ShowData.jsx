@@ -40,10 +40,11 @@ const ShowData = () => {
 		}
 	};
 
+	const uppercaseEndpoint = endpoint.toUpperCase();
+
 	return (
-		<div>
-			<h1>Show Data</h1>
-			<p>Endpoint: {endpoint}</p>
+		<div className="mt-4">
+			<h1 className="font-bold text-2xl">{uppercaseEndpoint}</h1>
 
 			<p>Total Data: {data.length}</p>
 			<div className="flex flex-wrap justify-center gap-8 m-10">
@@ -52,7 +53,13 @@ const ShowData = () => {
 				))}
 			</div>
 
-			{showMore && <button className="p-4 bg-blue-300 hover:bg-blue-800 hover:text-gray-50 text-xl rounded-lg mb-10" onClick={handleLoadMore}>Load More...</button>}
+			{showMore && (
+				<button
+					className="font-bold text-2xl mb-10 p-4 rounded-xl shadow-md w-auto bg-gray-200 hover:bg-blue-600 text-blue-600 hover:text-gray-200 border-4 border-blue-600 hover:border-gray-200"
+					onClick={handleLoadMore}>
+					Load More...
+				</button>
+			)}
 		</div>
 	);
 };

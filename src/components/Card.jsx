@@ -1,21 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({ data, endpoint }) => {
-	// const untuk kartu interaktif
+	// Handler item when clicked
+	const navigate = useNavigate();
 
-	const [isHovered, setIsHovered] = useState(false);
-	const [isClicked, setIsClicked] = useState(false);
-
-	const handleMouseEnter = () => {
-		setIsHovered(true);
-	};
-
-	const handleMouseLeave = () => {
-		setIsHovered(false);
-	};
-
-	const handleClick = () => {
-		setIsClicked(!isClicked);
+	// Fungsi untuk menavigasi ke halaman detail
+	const navigateToDetail = (id) => {
+		navigate(`/${endpoint}/${id}`);
 	};
 
 	// Cek jenis endpoint
@@ -24,16 +16,8 @@ const Card = ({ data, endpoint }) => {
 		const icon = image[0].icon;
 
 		return (
-			<div
-				className={`bg-gray-200 p-4 rounded-md shadow-md w-auto ${
-					isClicked ? "bg-blue-200" : ""
-				} ${
-					isHovered ? "bg-gray-700 text-gray-200" : ""
-				}`}
-				onMouseEnter={handleMouseEnter}
-				onMouseLeave={handleMouseLeave}
-				onClick={handleClick}>
-				<div className="card gap-4">
+			<div className="p-4 rounded-md shadow-md w-auto bg-gray-200 hover:bg-gray-700 bg-opacity-80 text-gray-700 hover:text-gray-200 border-4 border-gray-700 hover:border-gray-200">
+				<div className="card" onClick={() => navigateToDetail(data.id)}>
 					<img src={icon} alt="Group Icon" />
 					<h2 className="text-xl font-semibold">{name}</h2>
 				</div>
@@ -45,7 +29,7 @@ const Card = ({ data, endpoint }) => {
 		const { name, type, ability, quote } = data;
 
 		return (
-			<div className="card">
+			<div className="card" onClick={() => navigateToDetail(data.id)}>
 				<h2>{name}</h2>
 				<p>Type: {type}</p>
 				<p>Ability: {ability}</p>
