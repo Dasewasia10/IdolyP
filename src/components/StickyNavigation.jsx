@@ -31,27 +31,21 @@ const StickyNavigation = ({ isDarkMode }) => {
 				<li>
 					<Link
 						to="/idol"
-						className={`text-gray-800 ${
-							isDarkMode ? "text-gray-200" : "text-gray-800"
-						}`}>
+						className={`${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>
 						Idol
 					</Link>
 				</li>
 				<li>
 					<Link
 						to="/card"
-						className={`text-gray-800${
-							isDarkMode ? "text-gray-200" : "text-gray-800"
-						}`}>
+						className={`${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>
 						Card
 					</Link>
 				</li>
 				<li>
 					<Link
 						to="/about"
-						className={`text-gray-800${
-							isDarkMode ? "text-gray-200" : "text-gray-800"
-						}`}>
+						className={`${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>
 						About Us
 					</Link>
 				</li>

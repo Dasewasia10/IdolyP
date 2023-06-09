@@ -6,7 +6,12 @@ module.exports = {
 		"./page/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				bifur: ["Bifur", "sans-serif"],
+				movement: ["Movement", "sans-serif"],
+			},
+		},
 	},
 	plugins: [],
 };

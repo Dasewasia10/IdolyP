@@ -11,12 +11,27 @@ import Header from "./components/Header";
 import ScrollToTopButton from "./components/ScrollToTopButton";
 
 function App() {
-	// handler dark mode
-	const [isDarkMode, setIsDarkMode] = useState(false);
+	// Mengambil status Dark Mode dari localStorage (jika ada)
+	const savedDarkMode = localStorage.getItem("darkMode");
+	const [isDarkMode, setIsDarkMode] = useState(savedDarkMode === "true");
 
 	const toggleDarkMode = () => {
-		setIsDarkMode((prevMode) => !prevMode);
+		setIsDarkMode((prevMode) => {
+			const newMode = !prevMode;
+			// Menyimpan status Dark Mode ke localStorage
+			localStorage.setItem("darkMode", newMode);
+			return newMode;
+		});
 	};
+
+	useEffect(() => {
+		if (isDarkMode) {
+			document.documentElement.classList.add("dark");
+		} else {
+			document.documentElement.classList.remove("dark");
+		}
+		localStorage.setItem("isDarkMode", isDarkMode);
+	}, [isDarkMode]);
 
 	// handler tombol scroll to top
 	const [isVisible, setIsVisible] = useState(false);

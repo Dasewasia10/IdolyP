@@ -16,8 +16,10 @@ const Card = ({ data, endpoint }) => {
 		const icon = image[0].icon;
 
 		return (
-			<div className="p-4 rounded-md shadow-md w-auto bg-gray-200 hover:bg-gray-700 bg-opacity-80 text-gray-700 hover:text-gray-200 border-4 border-gray-700 hover:border-gray-200">
-				<div className="card" onClick={() => navigateToDetail(data.id)}>
+			<div className="p-4 rounded-full shadow-md w-auto bg-gray-200 hover:bg-gray-700 bg-opacity-80 text-gray-700 hover:text-gray-200 border-4 border-gray-700 hover:border-gray-200">
+				<div
+					className="card space-y-4"
+					onClick={() => navigateToDetail(data.id)}>
 					<img src={icon} alt="Group Icon" />
 					<h2 className="text-xl font-semibold">{name}</h2>
 				</div>

@@ -1,14 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-const MainPage = ({ isDarkMode }) => {
-	useEffect(() => {
-		if (isDarkMode) {
-			document.documentElement.classList.add("dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-		}
-		localStorage.setItem("isDarkMode", isDarkMode);
-	}, [isDarkMode]);
+const MainPage = ({  }) => {
 
 	return (
 		<>
