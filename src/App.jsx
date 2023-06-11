@@ -116,6 +116,11 @@ function App() {
             />
           </Routes>
         </div>
+        <div className="mx-auto flex flex-col items-center justify-center p-4">
+          <div className="text-md fixed bottom-4 flex">
+            &copy; Copyright by QualiArts. Created by Dasewasia @2023
+          </div>
+        </div>
         <div className="fixed bottom-2 right-4 z-50 float-right cursor-pointer">
           <ScrollToTopButton isVisible={isVisible} scrollToTop={scrollToTop} />
         </div>

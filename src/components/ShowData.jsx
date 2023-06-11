@@ -77,35 +77,17 @@ const ShowData = ({ isDarkMode }) => {
   };
 
   const handleLoadMore = () => {
-    const newData = data.slice(visibleData.length, visibleData.length + 8);
-    const newSaringData = data.slice(
-      filteredAndSortedVisibleData.length,
-      filteredAndSortedVisibleData.length + 8
-    );
+    const remainingData = filteredData.length - visibleData.length;
+    const newDataToShow = remainingData >= 8 ? 8 : remainingData;
 
-    if (newData.length > 0) {
-      setVisibleData((prevData) => [...prevData, ...newData]);
-    }
+    setVisibleData((prevData) => {
+      const endIndex = prevData.length + newDataToShow;
+      const newVisibleData = filteredData.slice(0, endIndex);
+      return newVisibleData;
+    });
 
-    if (visibleData.length + newData.length >= data.length) {
+    if (endIndex >= filteredData.length) {
       setShowMore(false);
-    }
-    if (newSaringData.length > 0) {
-      setFilteredAndSortedVisibleData((prevData) => [
-        ...prevData,
-        ...newSaringData,
-      ]);
-    }
-
-    if (
-      filteredAndSortedVisibleData.length + newSaringData.length >=
-      data.length
-    ) {
-      setShowMore(false);
-    }
-
-    if (visibleData.length == data.length) {
-      setShowMore(true);
     }
   };
 
@@ -225,16 +207,23 @@ const ShowData = ({ isDarkMode }) => {
       });
 
       setFilteredData(sorted);
-      setVisibleData([...sorted.slice(0, 8)]);
+
+      setVisibleData((prevData) => {
+        const prevVisibleLength = prevData.length;
+        const newVisibleData = sorted.slice(0, prevVisibleLength);
+        return newVisibleData;
+      });
     }
-  }, [sortTerm, isSortDescending]);
+  }, [sortTerm, isSortDescending, filteredAndSortedData]);
 
   const toggleSortDirection = () => {
     setIsSortDescending(!isSortDescending);
-    
-    if (visibleData.length == data.length) {
-      setShowMore(true);
-    }
+
+    setVisibleData((prevData) => {
+      const prevVisibleLength = prevData.length;
+      const newVisibleData = filteredAndSortedData.slice(0, prevVisibleLength);
+      return newVisibleData;
+    });
   };
 
   return (
@@ -299,14 +288,16 @@ const ShowData = ({ isDarkMode }) => {
         )}
       </div>
 
-      {showMore && visibleData.length < data.length && (
-        <button
-          className="mb-10 w-auto animate-bounce rounded-xl border-4 border-blue-600 bg-gray-200 p-4 text-2xl font-bold text-blue-600 shadow-md duration-1000 hover:border-gray-200 hover:bg-blue-600 hover:text-gray-200"
-          onClick={handleLoadMore}
-        >
-          ▼
-        </button>
-      )}
+      {showMore &&
+        visibleData.length < filteredData.length &&
+        visibleData.length >= 8 && (
+          <button
+            className="mb-10 w-auto animate-bounce rounded-xl border-4 border-blue-600 bg-gray-200 p-4 text-2xl font-bold text-blue-600 shadow-md duration-1000 hover:border-gray-200 hover:bg-blue-600 hover:text-gray-200"
+            onClick={handleLoadMore}
+          >
+            ▼
+          </button>
+        )}
     </div>
   );
 };

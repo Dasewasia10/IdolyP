@@ -54,7 +54,6 @@ const IdolPageDetail = ({ isDarkMode }) => {
 
     if (selectedVoiceData) {
       setSelectedVoice(selectedVoiceData);
-      setSelectedVoiceLanguage("en"); // Set the default language to English
       audio.src = selectedVoiceData.audio;
       audio.play();
       setIsAudioPlaying(true);
