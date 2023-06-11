@@ -7,11 +7,15 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			colors: {
+				ip: "#1024fc",
+			},
 			fontFamily: {
 				bifur: ["Bifur", "sans-serif"],
 				movement: ["Movement", "sans-serif"],
+				notoJP: ["NotoSansJP", "sans-serif"]
 			},
 		},
 	},
-	plugins: [],
+	plugins: [require("prettier-plugin-tailwindcss")],
 };

@@ -3,7 +3,7 @@ import ShowData from "../components/ShowData";
 
 const IdolPage = () => {
 	return (
-		<div className="idol-page mx-auto mt-4 justify-center w-full">
+		<div className="idol-page mx-auto justify-center w-full">
 			<ShowData endpoint="idol" />
 		</div>
 	);

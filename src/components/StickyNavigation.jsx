@@ -24,7 +24,7 @@ const StickyNavigation = ({ isDarkMode }) => {
 		<nav
 			className={`${
 				isSticky ? "fixed top-10 left-4" : "absolute"
-			} h-fit rounded-md bg-gray-200 bg-opacity-60 hover:bg-opacity-100 p-4 transition-all duration-300 ease-in-out ${
+			} h-fit rounded-md bg-gray-200 bg-opacity-60 hover:bg-opacity-100 p-4 transition-all duration-300 ease-in-out z-20 ${
 				isDarkMode ? "bg-gray-700" : ""
 			}`}>
 			<ul className="flex flex-col space-y-8 items-start my-4">

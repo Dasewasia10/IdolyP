@@ -3,7 +3,7 @@ import React from "react";
 const ScrollToTopButton = ({ isVisible, scrollToTop }) => {
 	return (
 		<div
-			className={`scroll-to-top sticky cursor-pointer bottom-2 right-4 float-right animate-bounce duration-1000 ${
+			className={`scroll-to-top animate-bounce ${
 				isVisible ? "show" : ""
 			}`}
 			onClick={scrollToTop}>
