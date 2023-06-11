@@ -57,20 +57,37 @@ const ShowData = ({ isDarkMode }) => {
     // Misalnya, jika ingin mengambil opsi "type" dari data endpoint "card":
     if (endpoint === "card") {
       const types = new Set();
+      const abilities = new Set();
+      const limiteds = new Set();
+      const names = new Set();
+      const initials = new Set();
       data.forEach((item) => {
         types.add(item.type);
+        abilities.add(item.ability);
+        limiteds.add(item.limited);
+        names.add(item.name);
+        initials.add(item.initial);
       });
-      return Array.from(types);
+      return {
+        name: Array.from(names),
+        type: Array.from(types),
+        ability: Array.from(abilities),
+        limited: Array.from(limiteds),
+        initial: Array.from(initials),
+      };
     } else if (endpoint === "idol") {
       const groups = new Set();
       const almaMaters = new Set();
+      const apparentAges = new Set();
       data.forEach((item) => {
         groups.add(item.detail[0].group);
         almaMaters.add(item.detail[0].almameter);
+        apparentAges.add(item.detail[0].apparent_age);
       });
       return {
         group: Array.from(groups),
         almaMater: Array.from(almaMaters),
+        apparent_age: Array.from(apparentAges),
       };
     }
     return {};
@@ -102,16 +119,18 @@ const ShowData = ({ isDarkMode }) => {
         let match = false;
 
         if (endpoint === "card") {
-          const title = item.title.toLowerCase();
           const name = item.name.toLowerCase();
           const type = item.type.toLowerCase();
           const ability = item.ability.toLowerCase();
+          const limited = item.limited;
+          const initial = item.initial;
           const filter = filterTerm.toLowerCase();
           match =
-            title.includes(filter) ||
             name.includes(filter) ||
             type.includes(filter) ||
-            ability.includes(filter);
+            ability.includes(filter) ||
+            limited === filter ||
+            initial === parseInt(filter);
         } else if (endpoint === "idol") {
           const name = item.name.toLowerCase();
           const group = item.detail[0].group.toLowerCase();
@@ -133,6 +152,8 @@ const ShowData = ({ isDarkMode }) => {
       setFilteredAndSortedData(filtered);
       setIsFiltered(true);
     }
+
+    console.log(filterTerm)
   };
 
   useEffect(() => {
@@ -159,6 +180,26 @@ const ShowData = ({ isDarkMode }) => {
             const nameA = a.name.toLowerCase();
             const nameB = b.name.toLowerCase();
             compareResult = nameA.localeCompare(nameB);
+          } else if (sortTerm === "type") {
+            const typeA = a.type.toLowerCase();
+            const typeB = b.type.toLowerCase();
+            compareResult = typeA.localeCompare(typeB);
+          } else if (sortTerm === "ability") {
+            const abilityA = a.ability.toLowerCase();
+            const abilityB = b.ability.toLowerCase();
+            compareResult = abilityA.localeCompare(abilityB);
+          } else if (sortTerm === "initial") {
+            const initialA = parseInt(a.initial);
+            const initialB = parseInt(b.initial);
+            compareResult = initialA - initialB;
+          } else if (sortTerm === "limited") {
+            if (a.limited && !b.limited) {
+              return -1; // a diurutkan terlebih dahulu (limited true)
+            } else if (!a.limited && b.limited) {
+              return 1; // b diurutkan terlebih dahulu (limited true)
+            } else {
+              return 0; // a dan b memiliki nilai limited yang sama
+            }
           }
         } else if (endpoint === "idol") {
           // Lakukan logika sorting berdasarkan endpoint "idol"
@@ -253,12 +294,27 @@ const ShowData = ({ isDarkMode }) => {
           options={filteredOptions}
           onFilter={filterData}
           isDarkMode={isDarkMode}
-          groupOptions={filteredOptions.group}
-          almaMaterOptions={filteredOptions.almaMater}
+          {...(endpoint === "card" && {
+            typeOptions: filteredOptions.type,
+            abilityOptions: filteredOptions.ability,
+            limitedOptions: filteredOptions.limited,
+            nameOptions: filteredOptions.name,
+            initialOptions: filteredOptions.initial,
+          })}
+          {...(endpoint === "idol" && {
+            groupOptions: filteredOptions.group,
+            almaMaterOptions: filteredOptions.almaMater,
+            apparentAgeOptions: filteredOptions.apparent_age,
+          })}
         />
+
         <div className="flex flex-row space-x-2">
           <Sort
-            options={["name", "age", "height", "weight", "threesize"]}
+            options={
+              endpoint === "card"
+                ? ["name", "type", "ability", "limited", "initial"]
+                : ["name", "age", "height", "weight", "threesize"]
+            }
             onSort={sortData}
           />
 
